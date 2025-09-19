@@ -39,10 +39,10 @@ do
 	for single_output in $(echo "${output}"|sed 's/,/\n/g')
 	do
 		mortgage_program=$(echo "${single_output}"|cut -d"|" -f1|sed 's/-Conforming//g;s/-Conforming1//g')
-		if [[ $(echo "${mortgage_program}" | grep -viE "20Year|FHA|15Year|30Year|VA|20Yr|15Yr|30Yr|10Yr|10Year") ]]; then
+		if [[ $(echo "${mortgage_program}" | grep -viE "20Year|FHA|15Year|30Year|VA|20Yr|15Yr|30Yr|10Yr|10Year|DownPmt") ]]; then
 		      interest_rate=$(echo "${single_output}"|cut -d"|" -f2)
 	              rate_output+=$mortgage_program-$interest_rate"|" 
-                elif [[ $(echo "${mortgage_program}" |grep -vi "VA"| grep -E "30Year|30Yr") ]]; then 
+                elif [[ $(echo "${mortgage_program}" |grep -vEi "VA|DownPmt"| grep -E "30Year|30Yr") ]]; then 
 		      interest_rate=$(echo "${single_output}"|cut -d"|" -f2)
 		      rate_output+=$mortgage_program-$interest_rate"|"
 		fi
