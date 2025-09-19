@@ -53,6 +53,6 @@ do
 done
 }
 
-#get_mortgage_units
+get_mortgage_units
 get_mortgage_rates > "${mortgage_rates}"
 rm -rf start_up.asp* $curl_output $credit_units $source_file
