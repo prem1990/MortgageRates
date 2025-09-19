@@ -4,6 +4,7 @@ curl_output="$(dirname $(readlink -f $0))/curl_output.txt"
 wget_output="$(dirname $(readlink -f $0))/credit_units.txt"
 base_url="https://mortgages.cumortgage.net/start_up.asp"
 siteid_url="https://mortgages.cumortgage.net/default.asp?siteId="
+mortgage_rates="$(dirname $(readlink -f $0))/mortgage_rates.csv"
 
 get_mortgage_units()
 {
@@ -53,6 +54,5 @@ done
 }
 
 #get_mortgage_units
-#get_mortgage_rates
-rm -rf start_up.asp*
-rm -rf $curl_output
+get_mortgage_rates > "${mortgage_rates}"
+rm -rf start_up.asp* $curl_output $credit_units $source_file
