@@ -5,10 +5,8 @@ curl_output="curl_output.txt"
 
 get_mortgage_units()
 {
-
-
+asdasd
 }
-
 
 
 
