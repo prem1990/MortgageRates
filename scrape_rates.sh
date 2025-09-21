@@ -61,4 +61,4 @@ done
 
 get_mortgage_units > "${source_file}"
 get_mortgage_rates > "${mortgage_rates}"
-rm -rf start_up.asp* $curl_output $credit_units $source_file $wget_output
+rm -rf start_up.asp* $curl_output $source_file $wget_output
