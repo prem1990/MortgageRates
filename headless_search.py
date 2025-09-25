@@ -24,7 +24,7 @@ async def main(url: str):
         await browser.close()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Fetch a page title with Playwright")
+    parser = argparse.ArgumentParser(description="Fetch a page content with Playwright")
     parser.add_argument("url", help="The URL to open")
     args = parser.parse_args()
 
