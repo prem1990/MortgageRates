@@ -2,6 +2,7 @@
 source_file="$(dirname $(readlink -f $0))/credit_unions.csv"
 curl_output="$(dirname $(readlink -f $0))/curl_output.txt"
 wget_output="$(dirname $(readlink -f $0))/credit_units.txt"
+headless_search="$(dirname $(readlink -f $0))/headless_search.py"
 base_url="https://mortgages.cumortgage.net/start_up.asp"
 siteid_url="https://mortgages.cumortgage.net/default.asp?siteId="
 mortgage_rates="$(dirname $(readlink -f $0))/mortgage_rates.csv"
@@ -27,6 +28,7 @@ do
 	rate_output=""
 	union_name=$(echo "${single_union}"|cut -d, -f1)
 	union_link=$(echo "${single_union}"|cut -d, -f2)
+	python3 $headless_search "${union_link}" > /dev/null
 	curl -s $union_link > $curl_output
 	while ! grep -q "Today" $curl_output; do
  		curl -s $union_link > $curl_output
