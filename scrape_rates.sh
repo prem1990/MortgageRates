@@ -28,11 +28,11 @@ do
 	rate_output=""
 	union_name=$(echo "${single_union}"|cut -d, -f1)
 	union_link=$(echo "${single_union}"|cut -d, -f2)
-	python3 $headless_search "${union_link}" > /dev/null
 	curl -s $union_link > $curl_output
 	while ! grep -q "Today" $curl_output; do
+		python3 $headless_search "${union_link}" > /dev/null
+		sleep 10 # Wait for 5 seconds before checking again
  		curl -s $union_link > $curl_output
-		sleep 5 # Wait for 5 seconds before checking again
 	done
 	output=$(grep 'border="0"' $curl_output  | grep Today | sed 's/></>\n</g' |grep -E "productDetailsSamplePmt|Interest Rate"|sed 's/<\/a>//g;s/<\/td>//g'|rev|cut -d">" -f1|rev|sed 's/ //g'|sed 's/-/|/g' |paste -sd','|sed 's/|/-/g'|sed 's/%,/%|/g;s/,/#/g;s/|/,/g;s/#/|/g')
 	if [[ -z "${output}" ]]; then
