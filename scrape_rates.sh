@@ -31,7 +31,7 @@ do
 	curl -s $union_link > $curl_output
 	while ! grep -q "Today" $curl_output; do
 		python3 $headless_search "${union_link}" > /dev/null
-		sleep 10 # Wait for 5 seconds before checking again
+		#sleep 10 # Wait for 5 seconds before checking again
  		curl -s $union_link > $curl_output
 	done
 	output=$(grep 'border="0"' $curl_output  | grep Today | sed 's/></>\n</g' |grep -E "productDetailsSamplePmt|Interest Rate"|sed 's/<\/a>//g;s/<\/td>//g'|rev|cut -d">" -f1|rev|sed 's/ //g'|sed 's/-/|/g' |paste -sd','|sed 's/|/-/g'|sed 's/%,/%|/g;s/,/#/g;s/|/,/g;s/#/|/g')
@@ -61,6 +61,7 @@ do
 done
 }
 
+rm -rf start_up.asp* $curl_output $source_file $wget_output
 get_mortgage_units > "${source_file}"
 get_mortgage_rates > "${mortgage_rates}"
 rm -rf start_up.asp* $curl_output $source_file $wget_output
