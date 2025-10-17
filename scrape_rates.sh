@@ -3,6 +3,7 @@ source_file="$(dirname $(readlink -f $0))/credit_unions.csv"
 curl_output="$(dirname $(readlink -f $0))/curl_output.txt"
 wget_output="$(dirname $(readlink -f $0))/credit_units.txt"
 headless_search="$(dirname $(readlink -f $0))/headless_search.py"
+log_file="$(dirname $(readlink -f $0))/headless_search.log"
 base_url="https://mortgages.cumortgage.net/start_up.asp"
 siteid_url="https://mortgages.cumortgage.net/default.asp?siteId="
 mortgage_rates="$(dirname $(readlink -f $0))/mortgage_rates.csv"
@@ -30,7 +31,7 @@ do
 	union_link=$(echo "${single_union}"|cut -d, -f2)
 	curl -s $union_link > $curl_output
 	while ! grep -q "Today" $curl_output; do
-		python3 $headless_search "${union_link}" > /dev/null
+		python3 $headless_search "${union_link}" > $log_file
 		#sleep 10 # Wait for 5 seconds before checking again
  		curl -s $union_link > $curl_output
 	done
@@ -61,7 +62,7 @@ do
 done
 }
 
-rm -rf start_up.asp* $curl_output $source_file $wget_output
+rm -rf start_up.asp* $log_file $curl_output $source_file $wget_output
 get_mortgage_units > "${source_file}"
 get_mortgage_rates > "${mortgage_rates}"
-rm -rf start_up.asp* $curl_output $source_file $wget_output
+rm -rf start_up.asp* $log_file $curl_output $source_file $wget_output
