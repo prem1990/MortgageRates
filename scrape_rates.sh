@@ -31,8 +31,8 @@ do
 	union_link=$(echo "${single_union}"|cut -d, -f2)
 	curl -s $union_link > $curl_output
 	while ! grep -q "Today" $curl_output; do
-		python3 $headless_search "${union_link}" > $log_file
-		#sleep 10 # Wait for 5 seconds before checking again
+		python3 $headless_search "${union_link}" > $log_file 2>&1
+		sleep 2 # Wait for 2 seconds before checking again
  		curl -s $union_link > $curl_output
 	done
 	output=$(grep 'border="0"' $curl_output  | grep Today | sed 's/></>\n</g' |grep -E "productDetailsSamplePmt|Interest Rate"|sed 's/<\/a>//g;s/<\/td>//g'|rev|cut -d">" -f1|rev|sed 's/ //g'|sed 's/-/|/g' |paste -sd','|sed 's/|/-/g'|sed 's/%,/%|/g;s/,/#/g;s/|/,/g;s/#/|/g')
